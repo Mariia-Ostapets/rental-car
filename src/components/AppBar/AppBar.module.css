@@ -1,0 +1,7 @@
+.appBar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f2f4f7;
+  padding: 24px 120px;
+  background-color: var(--secondary-color-light-gray2);
+}

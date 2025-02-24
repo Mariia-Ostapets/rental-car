@@ -1,0 +1,45 @@
+.homePageWrapper {
+  background-image: url(../../assets/images/hero.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 436px;
+  padding-bottom: 60px;
+}
+
+.homePageTitle {
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 1.2;
+  color: var(--primary-color-white);
+  margin-bottom: 16px;
+}
+
+.homePageText {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--primary-color-white);
+  margin-bottom: 40px;
+}
+
+.homePageBtn {
+  padding: 12px 99px;
+  min-width: 276px;
+  height: 44px;
+  border-radius: 12px;
+  outline: transparent;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-color-blue);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--primary-color-white);
+  transition: background-color var(--primary-transition);
+}
+
+.homePageBtn:hover,
+.homePageBtn:focus {
+  background-color: var(--secondary-color-blue);
+}
