@@ -6,7 +6,7 @@ export default function HomePage() {
   return (
     <>
       {/* <DocumentTitle>Home</DocumentTitle> */}
-      <div className={css.homePageWrapper}>
+      <section className={css.homePageWrapper}>
         <h1 className={css.homePageTitle}>Find your perfect rental car</h1>
         <p className={css.homePageText}>
           Reliable and budget-friendly rentals for any journey
@@ -14,7 +14,7 @@ export default function HomePage() {
         <Link className={css.homePageBtn} to={'/catalog'}>
           View Catalog
         </Link>
-      </div>
+      </section>
     </>
   );
 }
