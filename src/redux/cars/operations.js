@@ -12,18 +12,16 @@ export const getCars = createAsyncThunk(
           minMileage: filters.minMileage || undefined,
           maxMileage: filters.maxMileage || undefined,
           page,
-          limit: 10,
+          limit: 12,
         },
       });
 
       const cars = response.data.cars;
 
-      console.log('Response data:', response.data);
-
       const brands = [...new Set(cars.map(car => car.brand))];
       const prices = [...new Set(cars.map(car => car.rentalPrice))];
 
-      return { cars, brands, prices };
+      return { cars, hasMore: cars.length === 12, brands, prices };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

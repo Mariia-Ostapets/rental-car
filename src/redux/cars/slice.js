@@ -32,6 +32,9 @@ const carsSlice = createSlice({
       }
       localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
+    incrementPage: state => {
+      state.page += 1;
+    },
   },
   extraReducers: builder => {
     builder
@@ -41,16 +44,24 @@ const carsSlice = createSlice({
         state.error = null;
         // state.items =
         //   state.page === 1
-        //     ? action.payload
-        //     : [...state.items, ...action.payload];
+        //     ? action.payload.cars
+        //     : [...state.items, ...action.payload.cars];
         state.items = action.payload || [];
-        state.hasMore = action.payload.length === 10;
+        // state.hasMore = action.payload.length === 12;
+        // if (state.page === 1) {
+        //   state.items = action.payload.cars || [];
+        // } else {
+        //   state.items = [...state.items, ...(action.payload.cars || [])];
+        // }
+
+        state.hasMore = action.payload.cars?.length === 12;
+        state.page += 1;
       })
       .addCase(getCars.rejected, handleRejected);
   },
 });
 
-export const { toggleFavorite } = carsSlice.actions;
+export const { toggleFavorite, incrementPage } = carsSlice.actions;
 export default carsSlice.reducer;
 
 const persistConfig = {
