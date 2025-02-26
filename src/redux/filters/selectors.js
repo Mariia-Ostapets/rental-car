@@ -1,4 +1,3 @@
 export const selectFilters = state => state.filters.filters;
-export const selectAvailableBrands = state => state.filters.availableBrands;
-export const selectAvailablePrices = state => state.filters.availablePrices;
-export const selectAvailableMileages = state => state.filters.availableMileages;
+export const selectBrands = state => state.cars.brands;
+export const selectPrices = state => state.cars.prices;

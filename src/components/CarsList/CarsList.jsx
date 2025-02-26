@@ -101,16 +101,6 @@ export default function CarsList() {
           {loading ? <Loader /> : 'Load more'}
         </button>
       )}
-
-      {/* <Toaster position="top-center" reverseOrder={false} /> */}
-
-      {/* {page === totalPages && (
-        <Toaster position="top-center" reverseOrder={false} />
-      )} */}
-
-      {/* {!loading && page === totalPages && cars.length > 0 && (
-        <Toaster position="top-center" reverseOrder={false} />
-      )} */}
     </div>
   );
 }

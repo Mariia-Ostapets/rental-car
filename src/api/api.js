@@ -7,41 +7,25 @@ export const api = axios.create({
   },
 });
 
-// export const fetchCars = async ({ filters = {}, page = 1, perPage = 12 }) => {
-//   const response = await api.get('/cars', {
-//     params: {
-//       brand: filters.brand || undefined,
-//       rentalPrice: filters.price || undefined,
-//       minMileage: filters.minMileage || undefined,
-//       maxMileage: filters.maxMileage || undefined,
-//       page,
-//       limit: perPage,
-//     },
-//   });
-
-//   return {
-//     cars: response.data.cars,
-//     hasMore: response.data.cars.length === perPage,
-//     totalCars: response.data.totalCars,
-//     totalPages: response.data.totalPages,
-//     currentPage: response.data.page,
-//   };
-// };
-
-export const fetchCars = async ({ page, limit, ...params }) => {
+export const fetchCars = async ({ page, limit, filters, ...params }) => {
   const { data } = await api.get('/cars', {
     params: {
-      ...params, // фільтри
-      page, // номер поточної сторінки
-      limit, // кількість карток на сторінці
+      ...params,
+      page,
+      limit,
+      brand: filters?.brand || undefined,
+      price: filters?.price || undefined,
+      mileage: filters?.mileage || undefined,
     },
   });
 
   const prices = new Set();
   const mileages = new Set();
+  const brands = new Set();
   data.cars.forEach(car => {
     prices.add(car.rentalPrice);
     mileages.add(car.mileage);
+    brands.add(car.brand);
   });
 
   return {
@@ -50,14 +34,9 @@ export const fetchCars = async ({ page, limit, ...params }) => {
     totalPages: data.totalPages,
     prices: [...prices],
     mileages: [...mileages],
+    brands: [...brands],
   };
 };
-
-// export const fetchFiltersData = async () => {
-//   const response = await api.get('/brands');
-//   console.log('API Response:', response);
-//   return response.data;
-// };
 
 export const fetchFiltersData = async () => {
   const { data } = await api.get('/brands');

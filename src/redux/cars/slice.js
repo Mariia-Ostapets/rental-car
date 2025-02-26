@@ -23,6 +23,8 @@ const carsSlice = createSlice({
     totalPages: 0,
     prices: [],
     mileages: [],
+    brands: [],
+    totalCars: 0,
   },
   reducers: {
     toggleFavorite: (state, action) => {
@@ -36,6 +38,16 @@ const carsSlice = createSlice({
     incrementPage: state => {
       state.page += 1;
     },
+    setBrands: (state, action) => {
+      // Оновлюємо список брендів, додаючи нові унікальні бренди
+      const newBrands = action.payload;
+      state.brands = [...new Set([...state.brands, ...newBrands])];
+    },
+    setPrices: (state, action) => {
+      // Оновлюємо список брендів, додаючи нові унікальні бренди
+      const newPrices = action.payload;
+      state.prices = [...new Set([...state.prices, ...newPrices])];
+    },
   },
   extraReducers: builder => {
     builder
@@ -44,14 +56,22 @@ const carsSlice = createSlice({
         console.log('Fetched Cars:', action.payload);
         state.loading = false;
         state.error = null;
-        state.prices = action.payload.prices;
+        // state.prices = action.payload.prices;
         state.mileages = action.payload.mileages;
+        // state.brands = action.payload.brands;
         state.totalCars = action.payload.totalCars;
+        state.totalPages = action.payload.totalPages;
+
         const newCars = action.payload.cars.filter(
           car => !state.items.some(existingCar => existingCar.id === car.id)
         );
         state.items = [...state.items, ...newCars];
-        state.totalPages = action.payload.totalPages;
+        // Отримуємо нові бренди з нових машин
+        const newBrands = action.payload.cars.map(car => car.brand);
+        // Викликаємо setBrands для оновлення брендів
+        state.brands = [...new Set([...state.brands, ...newBrands])];
+        const newPrices = action.payload.cars.map(car => car.prices);
+        state.prices = [...new Set([...state.prices, ...newPrices])];
       })
       .addCase(getCars.rejected, handleRejected);
   },
