@@ -69,9 +69,9 @@ export default function CarsList() {
                   car.type.slice(1).toLowerCase()}
                 {car.mileage && ` | ${car.mileage.toLocaleString()} km`}
               </p>
-              <Link className={css.carsItemBtn} to={'/catalog'}>
+              <Link className={css.carsItemBtn} to={`/catalog/${car.id}`}>
                 Read more
-              </Link>
+              </Link>{' '}
               <svg
                 className={css.carFavourite}
                 onClick={() => dispatch(toggleFavorite(car.id))}

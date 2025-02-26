@@ -1,26 +1,33 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleFavorite } from '../redux/carsSlice';
-import { selectFavorites } from '../redux/selectors';
+import { useParams } from 'react-router-dom';
+import {
+  selectSelectedCar,
+  selectLoading,
+  selectError,
+} from '../../redux/cars/selectors';
+import { useEffect } from 'react';
+import CarDetails from '../../components/CarDetails/CarDetails';
+import { Loader } from '../../components/Loader/Loader';
+import { getCarById } from '../../redux/cars/operations';
 
-export default function CarDetailsPage({ car }) {
+export default function CarDetailsPage() {
+  const { id } = useParams();
+  console.log('Car ID:', id);
   const dispatch = useDispatch();
-  const favorites = useSelector(selectFavorites);
 
-  const handleFavorite = () => {
-    dispatch(toggleFavorite(car.id));
-  };
+  const car = useSelector(selectSelectedCar);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
+  useEffect(() => {
+    dispatch(getCarById(id));
+  }, [dispatch, id]);
 
   return (
-    <div className="car-card">
-      <h3>
-        {car.brand} - ${car.price.toLocaleString()}
-      </h3>
-      <p>Пробіг: {car.mileage.toLocaleString('uk-UA')} км</p>
-      <button onClick={handleFavorite}>
-        {favorites.includes(car.id)
-          ? 'Remove from favorites'
-          : 'Add to favorites'}
-      </button>
-    </div>
+    <>
+      {car && <CarDetails car={car} />}
+      {loading && <Loader />}
+      {error && <p>Error: {error}</p>}
+    </>
   );
 }

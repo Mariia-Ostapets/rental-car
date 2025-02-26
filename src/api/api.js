@@ -42,3 +42,8 @@ export const fetchFiltersData = async () => {
   const { data } = await api.get('/brands');
   return data;
 };
+
+export const fetchCarById = async id => {
+  const { data } = await api.get(`/cars/${id}`);
+  return data;
+};

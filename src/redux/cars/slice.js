@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCars } from './operations';
+import { getCarById, getCars } from './operations';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -39,12 +39,10 @@ const carsSlice = createSlice({
       state.page += 1;
     },
     setBrands: (state, action) => {
-      // Оновлюємо список брендів, додаючи нові унікальні бренди
       const newBrands = action.payload;
       state.brands = [...new Set([...state.brands, ...newBrands])];
     },
     setPrices: (state, action) => {
-      // Оновлюємо список брендів, додаючи нові унікальні бренди
       const newPrices = action.payload;
       state.prices = [...new Set([...state.prices, ...newPrices])];
     },
@@ -56,9 +54,7 @@ const carsSlice = createSlice({
         console.log('Fetched Cars:', action.payload);
         state.loading = false;
         state.error = null;
-        // state.prices = action.payload.prices;
         state.mileages = action.payload.mileages;
-        // state.brands = action.payload.brands;
         state.totalCars = action.payload.totalCars;
         state.totalPages = action.payload.totalPages;
 
@@ -66,14 +62,18 @@ const carsSlice = createSlice({
           car => !state.items.some(existingCar => existingCar.id === car.id)
         );
         state.items = [...state.items, ...newCars];
-        // Отримуємо нові бренди з нових машин
         const newBrands = action.payload.cars.map(car => car.brand);
-        // Викликаємо setBrands для оновлення брендів
         state.brands = [...new Set([...state.brands, ...newBrands])];
         const newPrices = action.payload.cars.map(car => car.prices);
         state.prices = [...new Set([...state.prices, ...newPrices])];
       })
-      .addCase(getCars.rejected, handleRejected);
+      .addCase(getCars.rejected, handleRejected)
+      .addCase(getCarById.pending, handlePending)
+      .addCase(getCarById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedCar = action.payload;
+      })
+      .addCase(getCarById.rejected, handleRejected);
   },
 });
 

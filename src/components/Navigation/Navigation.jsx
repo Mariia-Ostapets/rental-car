@@ -1,12 +1,17 @@
 import css from './Navigation.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
-const buildLinkClass = ({ isActive }) => {
-  return clsx(css.link, isActive && css.active);
-};
-
 export default function Navigation() {
+  const location = useLocation();
+
+  const buildLinkClass = ({ isActive }) => {
+    return clsx(
+      css.link,
+      isActive && !location.pathname.includes('catalog/') && css.active
+    );
+  };
+
   return (
     <nav className={css.nav}>
       <NavLink to="/" className={buildLinkClass}>
