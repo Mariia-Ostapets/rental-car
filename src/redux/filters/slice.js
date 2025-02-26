@@ -16,7 +16,6 @@ const handleRejected = (state, action) => {
 const filtersSlice = createSlice({
   name: 'filters',
   initialState: {
-    // items: [],
     filters: {
       brand: '',
       minMileage: '',
@@ -27,36 +26,26 @@ const filtersSlice = createSlice({
     availablePrices: [],
     loading: false,
     error: null,
-    // page: 1,
-    // hasMore: true,
   },
   reducers: {
     setFilter: (state, action) => {
       state.filters = { ...state.filters, ...action.payload };
-      //   state.page = 1;
-      //   state.items = [];
     },
     resetFilter: state => {
-      //   state.items = [];
       state.filters = {
         brand: '',
         minMileage: '',
         maxMileage: '',
         price: '',
       };
-      //   state.loading = false;
-      //   state.error = null;
     },
   },
   extraReducers: builder => {
     builder
-      //   .addCase(getFiltersData.pending, handlePending)
       .addCase(getCars.pending, handlePending)
       .addCase(getCars.fulfilled, (state, action) => {
         state.availableBrands = action.payload.brands;
         state.availablePrices = action.payload.prices;
-        // state.availableBrands = action.payload;
-        // state.availablePrices = action.payload.prices;
         state.loading = false;
         state.error = null;
       })

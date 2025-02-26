@@ -4,6 +4,7 @@ import {
   selectFilters,
   selectAvailableBrands,
   selectAvailablePrices,
+  // selectAvailableMileages,
 } from '../../redux/filters/selectors';
 // import { getFiltersData } from '../../redux/filters/operations';
 import { useEffect } from 'react';
@@ -13,18 +14,19 @@ export default function FiltersBar() {
   const dispatch = useDispatch();
   const brands = useSelector(selectAvailableBrands);
   const prices = useSelector(selectAvailablePrices);
+  // const mileages = useSelector(selectAvailableMileages);
   const filters = useSelector(selectFilters);
 
   useEffect(() => {
-    dispatch(getCars({ filters: {} }));
-  }, [dispatch]);
+    dispatch(getCars({ filters, page: 1 }));
+  }, [dispatch, filters]);
 
   const handleChange = e => {
     dispatch(setFilter({ [e.target.name]: e.target.value }));
   };
 
   const handleSearch = () => {
-    dispatch(getCars({ filters }));
+    dispatch(getCars({ filters, page: 1 }));
   };
 
   return (
@@ -33,11 +35,15 @@ export default function FiltersBar() {
         Brand:
         <select name="brand" value={filters.brand} onChange={handleChange}>
           <option value="">All Brands</option>
-          {brands.map(brand => (
-            <option key={brand} value={brand}>
-              {brand}
-            </option>
-          ))}
+          {brands && brands.length > 0 ? (
+            brands.map(brand => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))
+          ) : (
+            <option disabled>No Brands Available</option>
+          )}
         </select>
       </label>
 
@@ -59,14 +65,14 @@ export default function FiltersBar() {
           type="number"
           name="minMileage"
           placeholder="Min"
-          value={filters.minMileage}
+          // value={filters.minMileage}
           onChange={handleChange}
         />
         <input
           type="number"
           name="maxMileage"
           placeholder="Max"
-          value={filters.maxMileage}
+          // value={filters.maxMileage}
           onChange={handleChange}
         />
       </label>

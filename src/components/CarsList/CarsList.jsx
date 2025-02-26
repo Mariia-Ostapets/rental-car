@@ -4,30 +4,37 @@ import { useEffect } from 'react';
 import { getCars } from '../../redux/cars/operations';
 import {
   selectCars,
-  selectHasMore,
+  // selectError,
   selectFavorites,
+  selectLoading,
+  selectPage,
+  selectTotalPages,
 } from '../../redux/cars/selectors';
 import { selectFilters } from '../../redux/filters/selectors';
 import css from './CarsList.module.css';
 import { Link } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
+import { incrementPage } from '../../redux/cars/slice';
+// import toast, { Toaster } from 'react-hot-toast';
 
 export default function CarsList() {
   const dispatch = useDispatch();
   const favorites = useSelector(selectFavorites);
   const filters = useSelector(selectFilters);
-  const hasMore = useSelector(selectHasMore);
-  const { cars, page } = useSelector(selectCars);
-
-  console.log('Has more:', hasMore);
+  const cars = useSelector(selectCars);
+  console.log('Cars:', cars);
+  const page = useSelector(selectPage);
+  const totalPages = useSelector(selectTotalPages);
+  const loading = useSelector(selectLoading);
+  // const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(getCars({ filters, page: 1 }));
+    dispatch(getCars({ filters, page: 1, limit: 12 }));
   }, [dispatch, filters]);
 
   const handleLoadMore = () => {
-    console.log('Loading page', page);
-    dispatch(getCars({ filters, page }));
+    dispatch(getCars({ filters, page: page + 1, limit: 12 }));
+    dispatch(incrementPage());
   };
 
   return (
@@ -85,11 +92,25 @@ export default function CarsList() {
           <Loader />
         )}
       </ul>
-      {hasMore && (
-        <button className={css.loadMoreBtn} onClick={handleLoadMore}>
-          Load More
+      {page < totalPages && (
+        <button
+          className={css.loadMoreBtn}
+          onClick={handleLoadMore}
+          disabled={loading}
+        >
+          {loading ? <Loader /> : 'Load more'}
         </button>
       )}
+
+      {/* <Toaster position="top-center" reverseOrder={false} /> */}
+
+      {/* {page === totalPages && (
+        <Toaster position="top-center" reverseOrder={false} />
+      )} */}
+
+      {/* {!loading && page === totalPages && cars.length > 0 && (
+        <Toaster position="top-center" reverseOrder={false} />
+      )} */}
     </div>
   );
 }

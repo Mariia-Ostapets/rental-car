@@ -16,11 +16,13 @@ const carsSlice = createSlice({
   name: 'cars',
   initialState: {
     items: [],
-    favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+    favorites: [],
     loading: false,
     error: null,
     page: 1,
-    hasMore: true,
+    totalPages: 0,
+    prices: [],
+    mileages: [],
   },
   reducers: {
     toggleFavorite: (state, action) => {
@@ -30,7 +32,6 @@ const carsSlice = createSlice({
       } else {
         state.favorites.push(carId);
       }
-      localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
     incrementPage: state => {
       state.page += 1;
@@ -40,22 +41,17 @@ const carsSlice = createSlice({
     builder
       .addCase(getCars.pending, handlePending)
       .addCase(getCars.fulfilled, (state, action) => {
+        console.log('Fetched Cars:', action.payload);
         state.loading = false;
         state.error = null;
-        // state.items =
-        //   state.page === 1
-        //     ? action.payload.cars
-        //     : [...state.items, ...action.payload.cars];
-        state.items = action.payload || [];
-        // state.hasMore = action.payload.length === 12;
-        // if (state.page === 1) {
-        //   state.items = action.payload.cars || [];
-        // } else {
-        //   state.items = [...state.items, ...(action.payload.cars || [])];
-        // }
-
-        state.hasMore = action.payload.cars?.length === 12;
-        state.page += 1;
+        state.prices = action.payload.prices;
+        state.mileages = action.payload.mileages;
+        state.totalCars = action.payload.totalCars;
+        const newCars = action.payload.cars.filter(
+          car => !state.items.some(existingCar => existingCar.id === car.id)
+        );
+        state.items = [...state.items, ...newCars];
+        state.totalPages = action.payload.totalPages;
       })
       .addCase(getCars.rejected, handleRejected);
   },
