@@ -1,0 +1,108 @@
+/* .carsList {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 48px;
+  column-gap: 32px;
+  margin-bottom: 80px;
+} */
+
+.carsItem {
+  width: calc((100% - 96px) / 4);
+  position: relative;
+}
+
+.carImgWrapper {
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.carTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.carTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.carTitle,
+.carPrice {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #101828;
+}
+
+.carTitleAccent {
+  color: var(--primary-color-blue);
+}
+
+.carDescription {
+  text-align: left;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+  color: var(--primary-color-gray);
+  margin-bottom: 28px;
+}
+
+.carsItemBtn {
+  padding: 12px 97px;
+  min-width: 276px;
+  height: 44px;
+  border-radius: 12px;
+  outline: transparent;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-color-blue);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--primary-color-white);
+  transition: background-color var(--primary-transition);
+}
+
+.carsItemBtn:hover,
+.carsItemBtn:focus {
+  background-color: var(--secondary-color-blue);
+}
+
+.carFavourite {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* .loadMoreBtn {
+  min-width: 156px;
+  height: 44px;
+  border-radius: 12px;
+  padding: 12px 51px;
+  outline: transparent;
+  border: 1px solid var(--primary-color-blue);
+  cursor: pointer;
+  background-color: var(--primary-color-white);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--primary-color-black);
+  transition: border-color var(--primary-transition);
+  margin-bottom: 124px;
+}
+
+.loadMoreBtn:hover,
+.loadMoreBtn:focus {
+  border-color: var(--secondary-color-blue);
+} */

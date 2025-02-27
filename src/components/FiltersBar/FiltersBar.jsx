@@ -1,31 +1,51 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { setFilter } from '../../redux/filters/slice';
-// import {
-//   selectFilters,
-//   selectAvailableBrands,
-//   selectAvailablePrices,
-//   // selectAvailableMileages,
-// } from '../../redux/filters/selectors';
+import {
+  selectFilters,
+  // selectAvailableBrands,
+  selectPrices,
+  // selectAvailableMileages,
+} from '../../redux/filters/selectors';
 // import { getFiltersData } from '../../redux/filters/operations';
 // import { useEffect } from 'react';
 // import { getCars } from '../../redux/cars/operations';
-import {
-  // setSelectedBrand,
-  // setSelectedMileage,
-  // setSelectedPrice,
-  // resetFilters,
-  applyFilters,
-} from '../../redux/filters/slice';
-import { selectBrands, selectPrices } from '../../redux/filters/selectors';
+import // setSelectedBrand,
+// setSelectedMileage,
+// setSelectedPrice,
+// resetFilters,
+// applyFilters,
+'../../redux/filters/slice';
+import { selectBrands } from '../../redux/cars/selectors';
 // import { selectTotalPages } from '../../redux/cars/selectors';
 import { Formik, Field, Form } from 'formik';
 // import { useId } from 'react';
 import css from './FiltersBar.module.css';
+import { useEffect } from 'react';
+import { getCarBrands, getCars } from '../../redux/cars/operations';
+import { changeFilter } from '../../redux/filters/slice';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 export default function FiltersBar() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const brands = useSelector(selectBrands);
+  const filters = useSelector(selectFilters);
+
+  useEffect(() => {
+    dispatch(getCarBrands());
+  }, [dispatch]);
+
+  const handleSubmit = () => {
+    dispatch(getCars(1));
+  };
+
+  const handleChange = value => {
+    dispatch(changeFilter(value));
+  };
+
+  const handleChangeMileage = e => {
+    handleChange({ [e.target.name]: e.target.value });
+  };
   const prices = useSelector(selectPrices);
 
   // const handleBrandChange = e => {
@@ -40,15 +60,11 @@ export default function FiltersBar() {
   //   dispatch(setSelectedMileage(e.target.value));
   // };
 
-  const cars = useSelector(state => state.cars.items);
-
-  console.log('State Items:', cars);
-  console.log('State Brands:', brands);
-  console.log('State Prices:', prices);
+  // const cars = useSelector(state => state.cars.items);
 
   const initialValues = {
-    brand: ' ',
-    price: '',
+    brand: '',
+    rentalPrice: '',
     minMileage: '',
     maxMileage: '',
   };
@@ -57,24 +73,26 @@ export default function FiltersBar() {
   // const priceFieldId = useId();
   // const mileageFieldId = useId();
 
-  const handleSubmit = values => {
-    applyFilters(values);
-  };
+  // const handleSubmit = values => {
+  //   applyFilters(values);
+  // };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form className={css.filtersForm}>
         <div className={css.inputWrapper}>
-          <label className={css.label} htmlFor="brandFieldId">
+          <label className={css.label} htmlFor="brand">
             Car brand
           </label>
           <Field
-            className={css.select}
-            as="select"
+            component={CustomSelect}
+            options={brands}
+            placeholder={'Choose a brand'}
             name="brand"
-            id="brandFieldId"
-          >
-            <option className={css.option} value="">
+            id="brand"
+            onChange={handleChange}
+          />
+          {/* <option className={css.option} value="">
               Choose a brand
             </option>
             {brands.map(brand => (
@@ -82,20 +100,22 @@ export default function FiltersBar() {
                 {brand}
               </option>
             ))}
-          </Field>
+          </Field> */}
         </div>
 
         <div className={css.inputWrapper}>
-          <label className={css.label} htmlFor="priceFieldId">
+          <label className={css.label} htmlFor="price">
             Price/1 hour
           </label>
           <Field
-            className={css.select}
-            as="select"
-            name="price"
-            id="priceFieldId"
-          >
-            <option className={css.option} value="">
+            component={CustomSelect}
+            options={prices}
+            placeholder={'Choose a price'}
+            name="brand"
+            id="brand"
+            onChange={handleChange}
+          />
+          {/* <option className={css.option} value="">
               Choose a price
             </option>
             {prices.map(price => (
@@ -103,25 +123,30 @@ export default function FiltersBar() {
                 ${price}
               </option>
             ))}
-          </Field>
+          </Field> */}
         </div>
 
         <div className={css.inputWrapper}>
-          <label className={css.label} htmlFor="mileageFieldId">
+          <label className={css.label} htmlFor="minMileage">
             Car mileage / km
           </label>
           <div>
             <Field
               className={css.inputFirstWrapper}
-              type="number"
-              name="mileageFieldId1"
+              type="text"
+              id="minMileage"
+              name="minMileage"
               placeholder="From"
+              value={filters.minMileage}
+              onChange={handleChangeMileage}
             />
             <Field
               className={css.inputSecondWrapper}
-              type="number"
-              name="mileageFieldId2"
+              type="text"
+              name="maxMileage"
               placeholder="To"
+              value={filters.maxMileage}
+              onChange={handleChangeMileage}
             />
           </div>
         </div>

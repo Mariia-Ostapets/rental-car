@@ -9,10 +9,10 @@ import { useEffect } from 'react';
 import CarDetails from '../../components/CarDetails/CarDetails';
 import { Loader } from '../../components/Loader/Loader';
 import { getCarById } from '../../redux/cars/operations';
+import MainLayout from '../../components/ui/MainLayout/MainLayout';
 
 export default function CarDetailsPage() {
   const { id } = useParams();
-  console.log('Car ID:', id);
   const dispatch = useDispatch();
 
   const car = useSelector(selectSelectedCar);
@@ -24,10 +24,12 @@ export default function CarDetailsPage() {
   }, [dispatch, id]);
 
   return (
-    <>
-      {car && <CarDetails car={car} />}
-      {loading && <Loader />}
-      {error && <p>Error: {error}</p>}
-    </>
+    <MainLayout>
+      <section>
+        {car && <CarDetails car={car} />}
+        {loading && <Loader />}
+        {error && <p>Error: {error}</p>}
+      </section>
+    </MainLayout>
   );
 }

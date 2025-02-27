@@ -1,27 +1,27 @@
-// import { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getCars } from '../../redux/cars/operations';
-// import { selectCars } from '../../redux/cars/selectors';
 import FiltersBar from '../../components/FiltersBar/FiltersBar';
-import css from './CarsPage.module.css';
-// import { Link } from 'react-router-dom';
-// import { Loader } from '../../components/Loader/Loader';
 import CarsList from '../../components/CarsList/CarsList';
+import MainLayout from '../../components/ui/MainLayout/MainLayout';
+import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getCars } from '../../redux/cars/operations';
 
 export default function CarsPage() {
-  // const dispatch = useDispatch();
-  // // const cars = useSelector(selectCars);
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
 
-  // const { cars } = useSelector(selectCars);
-
-  // useEffect(() => {
-  //   dispatch(getCars({ filters: {} }));
-  // }, [dispatch]);
+  useEffect(() => {
+    console.log('Fetching cars for page:', page);
+    dispatch(getCars(page));
+  }, [dispatch, page]);
 
   return (
-    <div className={css.carsPageWrapper}>
-      <FiltersBar />
-      <CarsList />
-    </div>
+    <MainLayout>
+      <section>
+        <FiltersBar />
+        <CarsList />
+        <LoadMoreBtn page={page} setPage={setPage} />
+      </section>
+    </MainLayout>
   );
 }

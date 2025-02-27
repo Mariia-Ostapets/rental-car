@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCarById, getCars } from './operations';
+import { getCarBrands, getCarById, getCars } from './operations';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -15,16 +15,16 @@ const handleRejected = (state, action) => {
 const carsSlice = createSlice({
   name: 'cars',
   initialState: {
-    items: [],
-    favorites: [],
-    loading: false,
+    carsState: {
+      cars: [],
+      page: null,
+      totalPages: null,
+      totalCars: null,
+    },
+    loading: null,
     error: null,
-    page: 1,
-    totalPages: 0,
-    prices: [],
-    mileages: [],
-    brands: [],
-    totalCars: 0,
+    brands: null,
+    favorites: null,
   },
   reducers: {
     toggleFavorite: (state, action) => {
@@ -35,37 +35,33 @@ const carsSlice = createSlice({
         state.favorites.push(carId);
       }
     },
-    incrementPage: state => {
-      state.page += 1;
-    },
-    setBrands: (state, action) => {
-      const newBrands = action.payload;
-      state.brands = [...new Set([...state.brands, ...newBrands])];
-    },
-    setPrices: (state, action) => {
-      const newPrices = action.payload;
-      state.prices = [...new Set([...state.prices, ...newPrices])];
-    },
   },
   extraReducers: builder => {
     builder
       .addCase(getCars.pending, handlePending)
       .addCase(getCars.fulfilled, (state, action) => {
         console.log('Fetched Cars:', action.payload);
+        console.log(
+          'API response:',
+          action.payload.cars.map(car => car.id)
+        );
         state.loading = false;
         state.error = null;
-        state.mileages = action.payload.mileages;
-        state.totalCars = action.payload.totalCars;
-        state.totalPages = action.payload.totalPages;
-
-        const newCars = action.payload.cars.filter(
-          car => !state.items.some(existingCar => existingCar.id === car.id)
-        );
-        state.items = [...state.items, ...newCars];
-        const newBrands = action.payload.cars.map(car => car.brand);
-        state.brands = [...new Set([...state.brands, ...newBrands])];
-        const newPrices = action.payload.cars.map(car => car.prices);
-        state.prices = [...new Set([...state.prices, ...newPrices])];
+        state.carsState.totalCars = action.payload.totalCars;
+        state.carsState.page = action.payload.page;
+        state.carsState.totalPages = action.payload.totalPages;
+        console.log('Cars:', action.payload.cars);
+        state.carsState.cars =
+          state.carsState.page === 1
+            ? action.payload.cars
+            : [
+                ...new Map(
+                  [...state.carsState.cars, ...action.payload.cars].map(car => [
+                    car.id,
+                    car,
+                  ])
+                ).values(),
+              ];
       })
       .addCase(getCars.rejected, handleRejected)
       .addCase(getCarById.pending, handlePending)
@@ -73,7 +69,13 @@ const carsSlice = createSlice({
         state.loading = false;
         state.selectedCar = action.payload;
       })
-      .addCase(getCarById.rejected, handleRejected);
+      .addCase(getCarById.rejected, handleRejected)
+      .addCase(getCarBrands.pending, handlePending)
+      .addCase(getCarBrands.fulfilled, (state, action) => {
+        state.loading = false;
+        state.brands = action.payload;
+      })
+      .addCase(getCarBrands.rejected, handleRejected);
   },
 });
 
