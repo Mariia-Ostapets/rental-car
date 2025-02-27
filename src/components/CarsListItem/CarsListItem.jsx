@@ -1,21 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleFavorite } from '../../redux/cars/slice';
-// import { useEffect } from 'react';
-// import { getCars } from '../../redux/cars/operations';
-import {
-  // selectCars,
-  // selectError,
-  selectFavorites,
-  // selectLoading,
-  // selectPage,
-  // selectTotalPages,
-} from '../../redux/cars/selectors';
-// import { selectFilters } from '../../redux/filters/selectors';
+import { selectFavourites } from '../../redux/filters/selectors';
 import css from './CarsListItem.module.css';
 import { Link } from 'react-router-dom';
-// import { Loader } from '../Loader/Loader';
-// import { incrementPage } from '../../redux/cars/slice';
-// import toast, { Toaster } from 'react-hot-toast';
+import { addFavourite, deleteFavourite } from '../../redux/filters/slice';
 
 export default function CarsListItem({
   id,
@@ -28,30 +15,23 @@ export default function CarsListItem({
   rentalCompany,
   type,
   mileage,
+  favourite,
 }) {
   const dispatch = useDispatch();
-  const favorites = useSelector(selectFavorites);
-  // const filters = useSelector(selectFilters);
-  // const cars = useSelector(selectCars);
-  // const page = useSelector(selectPage);
-  // const totalPages = useSelector(selectTotalPages);
-  // const loading = useSelector(selectLoading);
-  // const error = useSelector(selectError);
+  const favourites = useSelector(selectFavourites);
 
-  // useEffect(() => {
-  //   dispatch(getCars({ filters, page: 1, limit: 12 }));
-  // }, [dispatch, filters]);
+  const handleClick = () => {
+    const isFavourite = favourites.find(item => item === id);
 
-  // const handleLoadMore = () => {
-  //   dispatch(getCars({ filters, page: page + 1, limit: 12 }));
-  //   dispatch(incrementPage());
-  // };
+    if (!isFavourite) {
+      dispatch(addFavourite(id));
+      return;
+    }
+
+    dispatch(deleteFavourite(id));
+  };
 
   return (
-    // <div>
-    //   <ul className={css.carsList}>
-    //     {Array.isArray(cars) && cars.length > 0 ? (
-    //       cars.map(car => (
     <li className={css.carsItem}>
       <div className={css.carImgWrapper}>
         <img
@@ -79,15 +59,34 @@ export default function CarsListItem({
       <Link className={css.carsItemBtn} to={`/catalog/${id}`}>
         Read more
       </Link>{' '}
+      {
+        <svg
+          className={css.carFavourite}
+          onClick={handleClick}
+          width="16"
+          height="16"
+        >
+          <use
+            href={`/sprite.svg#${
+              favourite ? 'icon-heart-active' : 'icon-heart'
+            }`}
+          />
+        </svg>
+      }
       {/* <svg
         className={css.carFavourite}
-        onClick={() => dispatch(toggleFavorite(id))}
+        onClick={() => {
+          console.log('Clicked on favorite:', id);
+          dispatch(toggleFavorite(id));
+        }}
         width="16"
         height="16"
       >
         <use
           href={`/sprite.svg#${
-            favorites.includes(id) ? 'icon-heart-active' : 'icon-heart'
+            favorites.some(car => car.id === id && car.favorite)
+              ? 'icon-heart-active'
+              : 'icon-heart'
           }`}
         />
       </svg> */}

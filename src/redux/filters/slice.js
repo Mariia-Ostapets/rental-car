@@ -15,16 +15,6 @@ import storage from 'redux-persist/lib/storage';
 
 const filtersSlice = createSlice({
   name: 'filters',
-  // initialState: {
-  //   brands: [],
-  //   prices: [],
-  //   mileages: [],
-  //   selectedBrand: '',
-  //   selectedPrice: '',
-  //   selectedMileage: '',
-  //   loading: false,
-  //   error: null,
-  // },
   initialState: {
     filters: {
       brand: '',
@@ -32,41 +22,36 @@ const filtersSlice = createSlice({
       minMileage: '',
       maxMileage: '',
     },
+    brands: [],
+    prices: [],
+    favourites: [],
   },
   reducers: {
-    // setSelectedBrand(state, action) {
-    //   state.selectedBrand = action.payload;
-    // },
-    // setSelectedPrice(state, action) {
-    //   state.selectedPrice = action.payload;
-    // },
-    // setSelectedMileage(state, action) {
-    //   state.selectedMileage = action.payload;
-    // },
     changeFilter: (state, action) =>
       (state.filters = { ...state.filters, ...action.payload }),
+    setPrices: (state, action) => {
+      console.log('Dispatching setPrices with:', action.payload);
+      state.prices = action.payload;
+    },
+    addFavourite: (state, action) => {
+      state.favourites.push(action.payload);
+    },
+    deleteFavourite: (state, action) => {
+      state.favourites = state.favourites.filter(
+        item => item !== action.payload
+      );
+    },
   },
-  // extraReducers: builder => {
-  //   builder
-  //     .addCase(getCars.pending, handlePending)
-  //     .addCase(getCars.fulfilled, (state, action) => {
-  //       state.brands = action.payload.brands;
-  //       state.prices = action.payload.prices;
-  //       state.mileages = action.payload.mileages;
-  //       state.loading = false;
-  //       state.error = null;
-  //     })
-  //     .addCase(getCars.rejected, handleRejected);
-  // },
 });
 
-export const { changeFilter } = filtersSlice.actions;
+export const { changeFilter, setPrices, addFavourite, deleteFavourite } =
+  filtersSlice.actions;
 export default filtersSlice.reducer;
 
 const persistConfig = {
   key: 'filters',
   storage,
-  whitelist: ['filters'],
+  whitelist: ['filters', 'brands', 'prices', 'favourites'],
 };
 
 export const persistedFiltersReducer = persistReducer(

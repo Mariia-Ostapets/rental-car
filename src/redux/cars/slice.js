@@ -23,18 +23,7 @@ const carsSlice = createSlice({
     },
     loading: null,
     error: null,
-    brands: null,
-    favorites: null,
-  },
-  reducers: {
-    toggleFavorite: (state, action) => {
-      const carId = action.payload;
-      if (state.favorites.includes(carId)) {
-        state.favorites = state.favorites.filter(id => id !== carId);
-      } else {
-        state.favorites.push(carId);
-      }
-    },
+    brands: [],
   },
   extraReducers: builder => {
     builder
@@ -79,13 +68,13 @@ const carsSlice = createSlice({
   },
 });
 
-export const { toggleFavorite, incrementPage } = carsSlice.actions;
+// export const { incrementPage } = carsSlice.actions;
 export default carsSlice.reducer;
 
 const persistConfig = {
   key: 'cars',
   storage,
-  whitelist: ['favorites', 'filters'],
+  whitelist: ['favourites', 'filters'],
 };
 
 export const persistedCarsReducer = persistReducer(

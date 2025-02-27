@@ -1,24 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-// import { setFilter } from '../../redux/filters/slice';
-import {
-  selectFilters,
-  // selectAvailableBrands,
-  selectPrices,
-  // selectAvailableMileages,
-} from '../../redux/filters/selectors';
-// import { getFiltersData } from '../../redux/filters/operations';
-// import { useEffect } from 'react';
-// import { getCars } from '../../redux/cars/operations';
-import // setSelectedBrand,
-// setSelectedMileage,
-// setSelectedPrice,
-// resetFilters,
-// applyFilters,
-'../../redux/filters/slice';
+import { selectFilters, selectPrices } from '../../redux/filters/selectors';
 import { selectBrands } from '../../redux/cars/selectors';
-// import { selectTotalPages } from '../../redux/cars/selectors';
 import { Formik, Field, Form } from 'formik';
-// import { useId } from 'react';
 import css from './FiltersBar.module.css';
 import { useEffect } from 'react';
 import { getCarBrands, getCars } from '../../redux/cars/operations';
@@ -30,6 +13,8 @@ export default function FiltersBar() {
 
   const brands = useSelector(selectBrands);
   const filters = useSelector(selectFilters);
+  console.log('brands:', brands);
+  console.log('filters:', filters);
 
   useEffect(() => {
     dispatch(getCarBrands());
@@ -47,20 +32,7 @@ export default function FiltersBar() {
     handleChange({ [e.target.name]: e.target.value });
   };
   const prices = useSelector(selectPrices);
-
-  // const handleBrandChange = e => {
-  //   dispatch(setSelectedBrand(e.target.value));
-  // };
-
-  // const handlePriceChange = e => {
-  //   dispatch(setSelectedPrice(e.target.value));
-  // };
-
-  // const handleMileageChange = e => {
-  //   dispatch(setSelectedMileage(e.target.value));
-  // };
-
-  // const cars = useSelector(state => state.cars.items);
+  console.log('prices:', prices);
 
   const initialValues = {
     brand: '',
@@ -68,14 +40,6 @@ export default function FiltersBar() {
     minMileage: '',
     maxMileage: '',
   };
-
-  // const brandFieldId = useId();
-  // const priceFieldId = useId();
-  // const mileageFieldId = useId();
-
-  // const handleSubmit = values => {
-  //   applyFilters(values);
-  // };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>

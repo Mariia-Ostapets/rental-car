@@ -1,0 +1,87 @@
+.customSelect {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 12px;
+  background-color: var(--secondary-color-light-gray3);
+  width: 204px;
+  height: 44px;
+  border: none;
+  outline: transparent;
+  position: relative;
+}
+
+.selectPlaceholder {
+  font-weight: 500;
+  color: var(--primary-color-black);
+}
+
+.arrowIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+}
+
+.listContainer {
+  padding: 14px 20px 14px 0;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  width: 100%;
+  text-align: left;
+  background-color: var(--primary-color-white);
+  border: 1px solid var(--secondary-color-light-gray3);
+  border-radius: 12px;
+  box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
+  max-height: 272px;
+  overflow: hidden;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.listContainer.priceHeight {
+  max-height: 188px;
+}
+
+.optionsList {
+  color: var(--primary-color-gray);
+  overflow-y: scroll;
+  max-height: 244px;
+}
+
+.optionsList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.optionsList::-webkit-scrollbar-thumb {
+  background: var(--secondary-color-light-gray1);
+  border-radius: 10px;
+  height: 128px;
+}
+
+.priceHeight .optionsList::-webkit-scrollbar-thumb {
+  height: 64px;
+}
+
+.priceHeight .optionsList {
+  max-height: 160px;
+}
+
+.option {
+  padding-left: 18px;
+}
+
+.option:not(:last-child) {
+  padding-bottom: 8px;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
