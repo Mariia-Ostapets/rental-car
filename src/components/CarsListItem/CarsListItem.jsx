@@ -3,6 +3,11 @@ import { selectFavourites } from '../../redux/filters/selectors';
 import css from './CarsListItem.module.css';
 import { Link } from 'react-router-dom';
 import { addFavourite, deleteFavourite } from '../../redux/filters/slice';
+import {
+  getCityAndCountry,
+  getSpaceInMileage,
+  getFirstLetterUpperCase,
+} from '../../utils';
 
 export default function CarsListItem({
   id,
@@ -49,12 +54,12 @@ export default function CarsListItem({
       </div>
       <p className={css.carDescription}>
         {address
-          ? address.split(', ').slice(-2).join(' | ') + ' | '
+          ? getCityAndCountry(address).join(' | ') + ' | '
           : 'Location not available'}
         {rentalCompany && ` ${rentalCompany} |`}
-        <br /> {type}
-        {/* {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()} */}
-        {mileage && ` | ${mileage.toLocaleString()} km`}
+        <br />
+        {getFirstLetterUpperCase(type)}
+        {mileage && ` | ${getSpaceInMileage(mileage)} km`}
       </p>
       <Link className={css.carsItemBtn} to={`/catalog/${id}`}>
         Read more
@@ -73,38 +78,6 @@ export default function CarsListItem({
           />
         </svg>
       }
-      {/* <svg
-        className={css.carFavourite}
-        onClick={() => {
-          console.log('Clicked on favorite:', id);
-          dispatch(toggleFavorite(id));
-        }}
-        width="16"
-        height="16"
-      >
-        <use
-          href={`/sprite.svg#${
-            favorites.some(car => car.id === id && car.favorite)
-              ? 'icon-heart-active'
-              : 'icon-heart'
-          }`}
-        />
-      </svg> */}
     </li>
-    //       ))
-    //     ) : (
-    //       <Loader />
-    //     )}
-    //   </ul>
-    //   {/* {page < totalPages && (
-    //     <button
-    //       className={css.loadMoreBtn}
-    //       onClick={handleLoadMore}
-    //       disabled={loading}
-    //     >
-    //       {loading ? <Loader /> : 'Load more'}
-    //     </button>
-    //   )} */}
-    // </div>
   );
 }

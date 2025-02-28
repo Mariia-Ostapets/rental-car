@@ -1,0 +1,98 @@
+.carDetailsSection {
+  display: flex;
+  justify-content: flex-start;
+  gap: 72px;
+}
+
+.imgAndFormWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.carImgWrapper {
+  border-radius: 19px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  max-width: 640px;
+  height: 512px;
+  position: relative;
+}
+
+.carTitleWrapper {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 8px;
+  padding-top: 20px;
+}
+
+.carTitle {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.carId {
+  font-weight: 500;
+  color: var(--primary-color-gray);
+}
+
+.carLocationAndMileageWrapper {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: flex-end;
+}
+
+.carLocationWrapper {
+  display: flex;
+  gap: 7px;
+  align-items: flex-end;
+}
+
+.carLocation,
+.carMileage {
+  font-weight: 500;
+}
+
+.carPrice {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--primary-color-blue);
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.carDescription {
+  margin-bottom: 68px;
+  text-align: left;
+  max-width: 488px;
+  font-weight: 500;
+}
+
+.carDescrWrapper {
+  margin-bottom: 110px;
+}
+
+.carDescrTitle {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.carDescrList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-weight: 500;
+}
+
+.carDescrItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

@@ -1,11 +1,3 @@
-/* .carsList {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 48px;
-  column-gap: 32px;
-  margin-bottom: 80px;
-} */
-
 .carsItem {
   width: calc((100% - 96px) / 4);
   position: relative;
@@ -83,26 +75,3 @@
   top: 16px;
   right: 16px;
 }
-
-/* .loadMoreBtn {
-  min-width: 156px;
-  height: 44px;
-  border-radius: 12px;
-  padding: 12px 51px;
-  outline: transparent;
-  border: 1px solid var(--primary-color-blue);
-  cursor: pointer;
-  background-color: var(--primary-color-white);
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 1.25;
-  color: var(--primary-color-black);
-  transition: border-color var(--primary-transition);
-  margin-bottom: 124px;
-}
-
-.loadMoreBtn:hover,
-.loadMoreBtn:focus {
-  border-color: var(--secondary-color-blue);
-} */
