@@ -14,7 +14,6 @@ export default function CarsPage() {
   const loading = useSelector(selectLoading);
 
   useEffect(() => {
-    console.log('Fetching cars for page:', page);
     dispatch(getCars(page));
   }, [dispatch, page]);
 
@@ -23,7 +22,7 @@ export default function CarsPage() {
       {loading && <Loader />}
       <MainLayout>
         <section>
-          <FiltersBar />
+          <FiltersBar page={page} setPage={setPage} />
           <CarsList />
           <LoadMoreBtn page={page} setPage={setPage} />
         </section>

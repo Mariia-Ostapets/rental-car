@@ -1,38 +1,31 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilters, selectPrices } from '../../redux/filters/selectors';
+// import { selectPrices } from '../../redux/filters/selectors';
 import { selectBrands } from '../../redux/cars/selectors';
 import { Formik, Field, Form } from 'formik';
 import css from './FiltersBar.module.css';
 import { useEffect } from 'react';
 import { getCarBrands, getCars } from '../../redux/cars/operations';
-import { changeFilter } from '../../redux/filters/slice';
+import { changeFilter, initialState } from '../../redux/filters/slice';
 import CustomSelect from '../CustomSelect/CustomSelect';
 
-export default function FiltersBar() {
+export default function FiltersBar({ page, setPage }) {
   const dispatch = useDispatch();
 
   const brands = useSelector(selectBrands);
-  const filters = useSelector(selectFilters);
-  console.log('brands:', brands);
-  console.log('filters:', filters);
 
   useEffect(() => {
     dispatch(getCarBrands());
   }, [dispatch]);
 
-  const handleSubmit = () => {
-    dispatch(getCars(1));
+  const handleSubmit = values => {
+    setPage(1);
+    dispatch(changeFilter(initialState.filters));
+    dispatch(changeFilter(values));
+    if (page === 1) {
+      dispatch(getCars(1));
+    }
   };
-
-  const handleChange = value => {
-    dispatch(changeFilter(value));
-  };
-
-  const handleChangeMileage = e => {
-    handleChange({ [e.target.name]: e.target.value });
-  };
-  const prices = useSelector(selectPrices);
-  console.log('prices:', prices);
+  // const prices = useSelector(selectPrices);
 
   const initialValues = {
     brand: '',
@@ -54,7 +47,6 @@ export default function FiltersBar() {
             placeholder={'Choose a brand'}
             name="brand"
             id="brand"
-            onChange={handleChange}
           />
           {/* <option className={css.option} value="">
               Choose a brand
@@ -73,11 +65,10 @@ export default function FiltersBar() {
           </label>
           <Field
             component={CustomSelect}
-            options={prices}
+            options={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
             placeholder={'Choose a price'}
-            name="brand"
-            id="brand"
-            onChange={handleChange}
+            name="price"
+            id="price"
           />
           {/* <option className={css.option} value="">
               Choose a price
@@ -101,16 +92,12 @@ export default function FiltersBar() {
               id="minMileage"
               name="minMileage"
               placeholder="From"
-              value={filters.minMileage}
-              onChange={handleChangeMileage}
             />
             <Field
               className={css.inputSecondWrapper}
               type="text"
               name="maxMileage"
               placeholder="To"
-              value={filters.maxMileage}
-              onChange={handleChangeMileage}
             />
           </div>
         </div>

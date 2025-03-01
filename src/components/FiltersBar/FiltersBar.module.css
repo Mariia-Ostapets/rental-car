@@ -22,7 +22,7 @@
   color: var(--primary-color-gray);
 }
 
-.select {
+/* .select {
   border-radius: 12px;
   padding: 12px 16px;
   width: 204px;
@@ -46,7 +46,7 @@
 
 .option:checked {
   color: var(--primary-color-black);
-}
+} */
 
 .inputFirstWrapper {
   border: none;

@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import css from './CustomSelect.module.css';
-import { useSelector } from 'react-redux';
-import { selectFilters } from '../../redux/filters/selectors';
 import clsx from 'clsx';
 
 export default function CustomSelect({
@@ -9,12 +7,9 @@ export default function CustomSelect({
   field,
   placeholder,
   options,
-  onChange,
   form,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const filters = useSelector(selectFilters);
-  console.log('filters:', filters);
 
   return (
     <button
@@ -25,16 +20,11 @@ export default function CustomSelect({
         setIsOpen(!isOpen);
       }}
     >
-      {field.name === 'rentalPrice' && (
-        <span className={css.selectPlaceholder}>
-          {filters.rentalPrice || placeholder}
-        </span>
-      )}
-      {field.name === 'brand' && (
-        <span className={css.selectPlaceholder}>
-          {filters.brand || placeholder}
-        </span>
-      )}
+      <span className={css.selectPlaceholder}>
+        {field.value && field.name === 'rentalPrice'
+          ? `To $${field.value}`
+          : field.value || placeholder}
+      </span>
       <div className={css.arrowIcon}>
         <svg width={16} height={16}>
           <use
@@ -61,7 +51,6 @@ export default function CustomSelect({
                   onClick={() => {
                     setIsOpen(false);
                     form.setFieldValue(field.name, item);
-                    onChange({ [field.name]: item });
                   }}
                 >
                   {item}

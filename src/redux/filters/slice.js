@@ -13,25 +13,24 @@ import storage from 'redux-persist/lib/storage';
 //   state.error = action.payload;
 // };
 
+export const initialState = {
+  filters: {
+    brand: '',
+    rentalPrice: '',
+    minMileage: '',
+    maxMileage: '',
+  },
+  brands: [],
+  prices: [],
+  favourites: [],
+};
+
 const filtersSlice = createSlice({
   name: 'filters',
-  initialState: {
-    filters: {
-      brand: '',
-      rentalPrice: '',
-      minMileage: '',
-      maxMileage: '',
-    },
-    brands: [],
-    prices: [],
-    favourites: [],
-  },
+  initialState: initialState,
   reducers: {
-    changeFilter: (state, action) =>
-      (state.filters = { ...state.filters, ...action.payload }),
-    setPrices: (state, action) => {
-      console.log('Dispatching setPrices with:', action.payload);
-      state.prices = action.payload;
+    changeFilter: (state, action) => {
+      state.filters = action.payload;
     },
     addFavourite: (state, action) => {
       state.favourites.push(action.payload);
@@ -51,7 +50,8 @@ export default filtersSlice.reducer;
 const persistConfig = {
   key: 'filters',
   storage,
-  whitelist: ['filters', 'brands', 'prices', 'favourites'],
+  // whitelist: ['filters', 'brands', 'prices', 'favourites'],
+  whitelist: ['favourites'],
 };
 
 export const persistedFiltersReducer = persistReducer(

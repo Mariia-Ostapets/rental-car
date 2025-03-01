@@ -5,6 +5,7 @@ import CarsListItem from '../CarsListItem/CarsListItem';
 
 export default function CarsList() {
   const carsListAll = useSelector(selectAllCars);
+  console.log('carsListAll', carsListAll);
 
   return (
     <ul className={css.carsList}>

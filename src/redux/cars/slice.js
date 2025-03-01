@@ -29,17 +29,11 @@ const carsSlice = createSlice({
     builder
       .addCase(getCars.pending, handlePending)
       .addCase(getCars.fulfilled, (state, action) => {
-        console.log('Fetched Cars:', action.payload);
-        console.log(
-          'API response:',
-          action.payload.cars.map(car => car.id)
-        );
         state.loading = false;
         state.error = null;
         state.carsState.totalCars = action.payload.totalCars;
         state.carsState.page = action.payload.page;
         state.carsState.totalPages = action.payload.totalPages;
-        console.log('Cars:', action.payload.cars);
         state.carsState.cars =
           state.carsState.page === 1
             ? action.payload.cars
@@ -52,6 +46,7 @@ const carsSlice = createSlice({
                 ).values(),
               ];
       })
+
       .addCase(getCars.rejected, handleRejected)
       .addCase(getCarById.pending, handlePending)
       .addCase(getCarById.fulfilled, (state, action) => {
@@ -68,7 +63,6 @@ const carsSlice = createSlice({
   },
 });
 
-// export const { incrementPage } = carsSlice.actions;
 export default carsSlice.reducer;
 
 const persistConfig = {

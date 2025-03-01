@@ -14,6 +14,8 @@
 
 .selectPlaceholder {
   font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
   color: var(--primary-color-black);
 }
 
@@ -26,14 +28,14 @@
 }
 
 .listContainer {
-  padding: 14px 20px 14px 0;
+  padding: 14px 0 14px 0;
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
   opacity: 0;
   visibility: hidden;
   z-index: 1;
-  width: 100%;
+  width: 204px;
   text-align: left;
   background-color: var(--primary-color-white);
   border: 1px solid var(--secondary-color-light-gray3);
@@ -43,6 +45,7 @@
   overflow: hidden;
   font-weight: 500;
   line-height: 1.25;
+  font-family: 'Manrope', sans-serif;
 }
 
 .listContainer.priceHeight {
@@ -53,6 +56,7 @@
   color: var(--primary-color-gray);
   overflow-y: scroll;
   max-height: 244px;
+  padding-right: 8px;
 }
 
 .optionsList::-webkit-scrollbar {

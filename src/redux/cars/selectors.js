@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectFavourites } from '../filters/selectors';
 
 export const selectPage = state => state.cars.carsState.page;
-
 export const selectError = state => state.cars.error;
 export const selectSelectedCar = state => state.cars.selectedCar;
 export const selectTotalPages = state => state.cars.carsState.totalPages;
