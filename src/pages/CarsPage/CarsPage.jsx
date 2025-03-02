@@ -20,7 +20,7 @@ export default function CarsPage() {
 
   return (
     <>
-      <DocumentTitle>Rental Car Catalog</DocumentTitle>
+      <DocumentTitle>RentalCar Catalog</DocumentTitle>
       {loading && <Loader />}
       <MainLayout>
         <section>

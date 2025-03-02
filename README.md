@@ -26,50 +26,32 @@ API Documentation:
 
 ## Technologies Used 🛠️
 
-### **axios**
-
-### **clsx**
-
-### **formik**
-
-### **mui**
-
-### **helmet**
-
-### **modern-normalize**
-
-### **react-hot-toast**
-
-### **react-icons**
-
-### **react-spinners**
-
-### **redux-persist**
-
-### **yup**
+- **axios**
+- **clsx**
+- **formik**
+- **mui**
+- **helmet**
+- **modern-normalize**
+- **react-hot-toast**
+- **react-icons**
+- **react-spinners**
+- **redux-persist**
+- **yup**
 
 ## Setup Instructions 🚀
 
-### Clone the Repository:
+1. Clone the Repository: git clone https://github.com/your-repo/rental-car.git
 
-git clone https://github.com/your-repo/rental-car.git
+2. Navigate to the project folder: cd rental-car
 
-### Navigate to the project folder:
+3. Install Dependencies: npm install
 
-cd rental-car
+4. Run the development server: npm run dev
 
-### Install Dependencies:
-
-npm install
-
-### Run the development server:
-
-npm run dev
-
-### Open the app in your browser at http://localhost:3000
+5. Open the app in your browser at http://localhost:3000
 
 ## Author 🖋️
 
-Mariia Ostapets  
+Mariia Ostapets, Fullstack developer
 [LinkedIn](https://www.linkedin.com/in/mariia-ostapets/) |
 [GitHub](https://github.com/Mariia-Ostapets)

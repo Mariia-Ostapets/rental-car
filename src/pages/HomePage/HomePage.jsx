@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function HomePage() {
   return (
     <>
-      <DocumentTitle>Rental Car Home</DocumentTitle>
+      <DocumentTitle>RentalCar Home</DocumentTitle>
       <section className={css.homePageWrapper}>
         <h1 className={css.homePageTitle}>Find your perfect rental car</h1>
         <p className={css.homePageText}>
