@@ -14,9 +14,15 @@ export default function LoadMoreBtn({ page, setPage }) {
   return (
     <div>
       {totalPages !== null && totalPages > page && (
-        <button className={css.loadMoreBtn} onClick={onClick} type="button">
-          {loading ? <Loader /> : 'Load more'}
-        </button>
+        <div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <button className={css.loadMoreBtn} onClick={onClick} type="button">
+              Load more
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

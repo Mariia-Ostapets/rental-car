@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import css from './CustomSelect.module.css';
+import { useState } from 'react';
 import clsx from 'clsx';
 
 export default function CustomSelect({
@@ -42,6 +42,15 @@ export default function CustomSelect({
         )}
       >
         <ul className={clsx(css.optionsList)}>
+          <li
+            className={css.option}
+            onClick={() => {
+              setIsOpen(false);
+              form.setFieldValue(field.name, '');
+            }}
+          >
+            All
+          </li>
           {options !== null &&
             options.map(item => {
               return (

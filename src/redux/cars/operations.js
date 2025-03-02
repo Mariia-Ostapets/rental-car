@@ -1,21 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../api/api';
+import { setRentalPrices } from './slice';
 
 export const getCars = createAsyncThunk(
   'cars/getCars',
   async (page, thunkAPI) => {
     const { filters } = thunkAPI.getState();
+    const { brand, rentalPrice, minMileage, maxMileage } = filters.filters;
 
     try {
-      const { data } = await api.get(
-        `/cars?page=${page}&brand=${filters.filters.brand}&rentalPrice=${filters.filters.rentalPrice}&minMileage=${filters.filters.minMileage}&maxMileage=${filters.filters.maxMileage}`
-      );
+      const { data } = await api.get('/cars', {
+        params: {
+          page,
+          brand,
+          rentalPrice,
+          minMileage,
+          maxMileage,
+        },
+      });
 
-      console.log('API response:', data);
+      const rentalPrices = [...new Set(data.cars.map(car => car.rentalPrice))];
+      thunkAPI.dispatch(setRentalPrices(rentalPrices));
 
       return data;
     } catch (error) {
-      console.error('API error:', error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

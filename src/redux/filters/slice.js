@@ -1,17 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-// import { getFiltersData } from './operations';
-// import { getCars } from '../cars/operations';
-
-// const handlePending = state => {
-//   state.loading = true;
-// };
-
-// const handleRejected = (state, action) => {
-//   state.loading = false;
-//   state.error = action.payload;
-// };
 
 export const initialState = {
   filters: {
@@ -20,8 +9,6 @@ export const initialState = {
     minMileage: '',
     maxMileage: '',
   },
-  brands: [],
-  prices: [],
   favourites: [],
 };
 
@@ -37,20 +24,19 @@ const filtersSlice = createSlice({
     },
     deleteFavourite: (state, action) => {
       state.favourites = state.favourites.filter(
-        item => item !== action.payload
+        favourite => favourite !== action.payload
       );
     },
   },
 });
 
-export const { changeFilter, setPrices, addFavourite, deleteFavourite } =
+export const { changeFilter, addFavourite, deleteFavourite } =
   filtersSlice.actions;
 export default filtersSlice.reducer;
 
 const persistConfig = {
   key: 'filters',
   storage,
-  // whitelist: ['filters', 'brands', 'prices', 'favourites'],
   whitelist: ['favourites'],
 };
 

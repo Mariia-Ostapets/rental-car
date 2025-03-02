@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCars } from '../../redux/cars/operations';
 import { selectLoading } from '../../redux/cars/selectors';
 import { Loader } from '../../components/Loader/Loader';
+import DocumentTitle from '../../components/ui/DocumentTitle';
 
 export default function CarsPage() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function CarsPage() {
 
   return (
     <>
+      <DocumentTitle>Rental Car Catalog</DocumentTitle>
       {loading && <Loader />}
       <MainLayout>
         <section>

@@ -1,3 +1,4 @@
+import css from './CarDetails.module.css';
 import {
   getShortId,
   getCityAndCountry,
@@ -5,7 +6,6 @@ import {
   getFirstLetterUpperCase,
 } from '../../utils';
 import OrderForm from '../OrderForm/OrderForm';
-import css from './CarDetails.module.css';
 
 export default function CarDetails({ car }) {
   return (

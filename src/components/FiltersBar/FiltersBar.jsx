@@ -1,31 +1,54 @@
-import { useSelector, useDispatch } from 'react-redux';
-// import { selectPrices } from '../../redux/filters/selectors';
-import { selectBrands } from '../../redux/cars/selectors';
-import { Formik, Field, Form } from 'formik';
 import css from './FiltersBar.module.css';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { Formik, Field, Form } from 'formik';
+import { selectBrands } from '../../redux/cars/selectors';
 import { getCarBrands, getCars } from '../../redux/cars/operations';
 import { changeFilter, initialState } from '../../redux/filters/slice';
 import CustomSelect from '../CustomSelect/CustomSelect';
+import { handleMileageInput, clearMileageInput } from '../../utils';
+// Даний код допрацюю пізніше
+// import { setRentalPrices } from '../../redux/cars/slice';
+// import { selectRentalPrices } from '../../redux/cars/selectors';
 
 export default function FiltersBar({ page, setPage }) {
   const dispatch = useDispatch();
 
   const brands = useSelector(selectBrands);
+  const [minMileageValue, setMinMileage] = useState('');
+  const [maxMileageValue, setMaxMileage] = useState('');
+  // Даний код допрацюю пізніше
+  // const rentalPrices = useSelector(selectRentalPrices);
+  // console.log(rentalPrices);
 
   useEffect(() => {
     dispatch(getCarBrands());
   }, [dispatch]);
 
+  const handleChange = e => {
+    const { name, value } = e.target;
+
+    if (name === 'minMileage') {
+      setMinMileage(handleMileageInput(value, 'From '));
+    } else if (name === 'maxMileage') {
+      setMaxMileage(handleMileageInput(value, 'To '));
+    }
+  };
+
   const handleSubmit = values => {
     setPage(1);
     dispatch(changeFilter(initialState.filters));
-    dispatch(changeFilter(values));
+    dispatch(
+      changeFilter({
+        ...values,
+        minMileage: clearMileageInput(minMileageValue),
+        maxMileage: clearMileageInput(maxMileageValue),
+      })
+    );
     if (page === 1) {
       dispatch(getCars(1));
     }
   };
-  // const prices = useSelector(selectPrices);
 
   const initialValues = {
     brand: '',
@@ -48,15 +71,6 @@ export default function FiltersBar({ page, setPage }) {
             name="brand"
             id="brand"
           />
-          {/* <option className={css.option} value="">
-              Choose a brand
-            </option>
-            {brands.map(brand => (
-              <option className={css.option} key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </Field> */}
         </div>
 
         <div className={css.inputWrapper}>
@@ -66,19 +80,12 @@ export default function FiltersBar({ page, setPage }) {
           <Field
             component={CustomSelect}
             options={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+            // Даний код допрацюю пізніше
+            // options={rentalPrices}
             placeholder={'Choose a price'}
-            name="price"
+            name="rentalPrice"
             id="price"
           />
-          {/* <option className={css.option} value="">
-              Choose a price
-            </option>
-            {prices.map(price => (
-              <option className={css.option} key={price} value={price}>
-                ${price}
-              </option>
-            ))}
-          </Field> */}
         </div>
 
         <div className={css.inputWrapper}>
@@ -92,12 +99,16 @@ export default function FiltersBar({ page, setPage }) {
               id="minMileage"
               name="minMileage"
               placeholder="From"
+              onChange={handleChange}
+              value={minMileageValue}
             />
             <Field
               className={css.inputSecondWrapper}
               type="text"
               name="maxMileage"
               placeholder="To"
+              onChange={handleChange}
+              value={maxMileageValue}
             />
           </div>
         </div>

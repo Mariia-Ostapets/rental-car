@@ -1,3 +1,4 @@
+import css from './OrderForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from '@mui/material';
@@ -5,7 +6,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import css from './OrderForm.module.css';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -27,10 +27,17 @@ export default function OrderForm() {
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    console.log('Form Data:', values);
+    // console.log('Form Data:', values);
     toast.success('Booking successful! Manager will contact you.', {
       duration: 3000,
       position: 'top-center',
+      style: {
+        color: 'var(--primary-color-blue)',
+        backgroundColor: 'var(--primary-color-white)',
+        fontWeight: 'bold',
+        padding: '8px 30px',
+        borderRadius: '12px',
+      },
     });
     resetForm();
   };
@@ -111,7 +118,6 @@ export default function OrderForm() {
                   value={values.bookingDate}
                   onChange={date => setFieldValue('bookingDate', dayjs(date))}
                   sx={datePickerProps}
-                  // disableOpenPicker
                   open={isOpen}
                   onClose={() => setIsOpen(false)}
                   slotProps={{

@@ -10,6 +10,7 @@ import CarDetails from '../../components/CarDetails/CarDetails';
 import { Loader } from '../../components/Loader/Loader';
 import { getCarById } from '../../redux/cars/operations';
 import MainLayout from '../../components/ui/MainLayout/MainLayout';
+import DocumentTitle from '../../components/ui/DocumentTitle';
 
 export default function CarDetailsPage() {
   const { id } = useParams();
@@ -24,12 +25,17 @@ export default function CarDetailsPage() {
   }, [dispatch, id]);
 
   return (
-    <MainLayout>
-      <section>
-        {car && <CarDetails car={car} />}
-        {loading && <Loader />}
-        {error && <p>Error: {error}</p>}
-      </section>
-    </MainLayout>
+    <>
+      <DocumentTitle>
+        Rent {car?.brand || 'Loading...'} {car?.model || 'Loading...'}
+      </DocumentTitle>
+      <MainLayout>
+        <section>
+          {car && <CarDetails car={car} />}
+          {loading && <Loader />}
+          {error && <p>Error: {error}</p>}
+        </section>
+      </MainLayout>
+    </>
   );
 }

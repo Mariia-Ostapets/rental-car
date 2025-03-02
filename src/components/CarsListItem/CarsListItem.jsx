@@ -1,6 +1,6 @@
+import css from './CarsListItem.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFavourites } from '../../redux/filters/selectors';
-import css from './CarsListItem.module.css';
 import { Link } from 'react-router-dom';
 import { addFavourite, deleteFavourite } from '../../redux/filters/slice';
 import {

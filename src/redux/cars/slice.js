@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCarBrands, getCarById, getCars } from './operations';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 const handlePending = state => {
   state.loading = true;
@@ -24,6 +22,15 @@ const carsSlice = createSlice({
     loading: null,
     error: null,
     brands: [],
+    rentalPrices: [],
+  },
+  reducers: {
+    setRentalPrices: (state, action) => {
+      state.rentalPrices =
+        state.carsState.page === 1
+          ? action.payload
+          : [...state.rentalPrices, ...action.payload];
+    },
   },
   extraReducers: builder => {
     builder
@@ -32,19 +39,12 @@ const carsSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.carsState.totalCars = action.payload.totalCars;
-        state.carsState.page = action.payload.page;
+        state.carsState.page = Number(action.payload.page);
         state.carsState.totalPages = action.payload.totalPages;
         state.carsState.cars =
           state.carsState.page === 1
             ? action.payload.cars
-            : [
-                ...new Map(
-                  [...state.carsState.cars, ...action.payload.cars].map(car => [
-                    car.id,
-                    car,
-                  ])
-                ).values(),
-              ];
+            : [...state.carsState.cars, ...action.payload.cars];
       })
 
       .addCase(getCars.rejected, handleRejected)
@@ -63,15 +63,6 @@ const carsSlice = createSlice({
   },
 });
 
+export const { setRentalPrices } = carsSlice.actions;
+
 export default carsSlice.reducer;
-
-const persistConfig = {
-  key: 'cars',
-  storage,
-  whitelist: ['favourites', 'filters'],
-};
-
-export const persistedCarsReducer = persistReducer(
-  persistConfig,
-  carsSlice.reducer
-);

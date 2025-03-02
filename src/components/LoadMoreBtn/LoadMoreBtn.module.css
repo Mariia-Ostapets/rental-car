@@ -13,7 +13,6 @@
   line-height: 1.25;
   color: var(--primary-color-black);
   transition: border-color var(--primary-transition);
-  /* margin-bottom: 124px; */
 }
 
 .loadMoreBtn:hover,
