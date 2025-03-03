@@ -48,3 +48,8 @@
   color: var(--primary-color-white);
   transition: background-color var(--primary-transition);
 }
+
+.formBtn:hover,
+.formBtn:hover {
+  background-color: var(--secondary-color-blue);
+}
